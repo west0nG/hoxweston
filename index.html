@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Professional VP — Weston Guo</title>
+
+<!-- Fonts: Archivo Black (massive display), Space Grotesk (body, very bold weights),
+     Space Mono (mono labels), Noto Sans SC (Chinese, heavy weights for brutalist feel) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@500;700;900&display=swap"
+/>
+
+<style>
+/* =============================================================
+   THEME — Neo-Brutalism palette + tokens
+   ============================================================= */
+:root {
+  /* 3-color core + 1 secondary accent */
+  --cream:  #F2ECDA;       /* warm paper background */
+  --cream-2:#EAE2C9;       /* slight contrast */
+  --black:  #0A0A0A;
+  --yellow: #FFE34D;       /* primary accent — bright */
+  --pink:   #FF6B8A;       /* secondary accent */
+  --blue:   #4361EE;       /* tertiary, used sparingly */
+
+  /* Brutalist signature: hard borders + offset shadows (NO blur) */
+  --border-w:    3px;
+  --border-w-lg: 5px;
+  --shadow-sm:   4px 4px 0 var(--black);
+  --shadow-md:   7px 7px 0 var(--black);
+  --shadow-lg:   10px 10px 0 var(--black);
+
+  /* Typography */
+  --font-display: "Archivo Black", "Noto Sans SC", system-ui, sans-serif;
+  --font-body:    "Space Grotesk", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono:    "Space Mono", ui-monospace, monospace;
+
+  /* Sizes — clamp() for viewport fitting */
+  --huge-size:    clamp(2.8rem, 9.5vw, 8rem);
+  --title-size:   clamp(1.8rem, 5vw, 4.25rem);
+  --h2-size:      clamp(1.3rem, 3.2vw, 2.4rem);
+  --h3-size:      clamp(1rem, 2.2vw, 1.5rem);
+  --body-size:    clamp(0.9rem, 1.4vw, 1.15rem);
+  --small-size:   clamp(0.7rem, 1vw, 0.9rem);
+  --mono-size:    clamp(0.7rem, 0.95vw, 0.85rem);
+
+  --slide-padding: clamp(1.5rem, 4.5vw, 4.5rem);
+  --content-gap:   clamp(1rem, 2vw, 2rem);
+  --element-gap:   clamp(0.5rem, 1.2vw, 1.25rem);
+
+  --ease:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur:   0.55s;
+}
+
+/* =============================================================
+   VIEWPORT-BASE.CSS — mandatory base
+   ============================================================= */
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--cream);
+}
+
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: 100%;
+  overflow: hidden;
+  padding: var(--slide-padding);
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-height: 700px) {
+  :root {
+    --slide-padding: clamp(1rem, 3.5vw, 2.5rem);
+    --huge-size: clamp(2.2rem, 7.5vw, 5rem);
+    --title-size: clamp(1.4rem, 4.5vw, 2.75rem);
+    --h2-size: clamp(1.1rem, 2.8vw, 1.85rem);
+    --shadow-md: 5px 5px 0 var(--black);
+    --shadow-lg: 7px 7px 0 var(--black);
+  }
+}
+@media (max-height: 600px) {
+  :root {
+    --slide-padding: clamp(0.75rem, 3vw, 1.75rem);
+    --huge-size: clamp(1.7rem, 6vw, 3.75rem);
+    --title-size: clamp(1.15rem, 4vw, 2.1rem);
+    --body-size: clamp(0.78rem, 1.2vw, 0.95rem);
+    --shadow-md: 4px 4px 0 var(--black);
+    --shadow-lg: 5px 5px 0 var(--black);
+  }
+  .nav-dots, .keyboard-hint { display: none; }
+}
+@media (max-height: 500px) {
+  :root {
+    --slide-padding: clamp(0.5rem, 2.2vw, 1.1rem);
+    --huge-size: clamp(1.3rem, 5vw, 2.5rem);
+    --title-size: clamp(1rem, 3.4vw, 1.6rem);
+    --body-size: clamp(0.7rem, 1vw, 0.85rem);
+  }
+}
+@media (max-width: 600px) {
+  :root { --huge-size: clamp(2rem, 12vw, 4rem); --title-size: clamp(1.2rem, 7vw, 2.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.2s !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* =============================================================
+   GLOBAL — body + textures
+   ============================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--black);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle paper-like dot grain texture on every slide */
+.slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(10,10,10,0.07) 1px, transparent 0);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================================
+   PAGE INDICATOR — minimal, top corners
+   ============================================================= */
+.page-mark {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.75rem);
+  left: clamp(1rem, 2vw, 1.75rem);
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  z-index: 5;
+  background: var(--cream);
+  border: var(--border-w) solid var(--black);
+  padding: 0.4em 0.75em;
+}
+
+.page-mark-r {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.75rem);
+  right: clamp(1rem, 2vw, 1.75rem);
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  z-index: 5;
+}
+.page-mark-r .blob {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--black);
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+/* =============================================================
+   BRUTALIST PRIMITIVES
+   ============================================================= */
+.brutal-card {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1rem, 2vw, 1.75rem);
+  position: relative;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.brutal-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.brutal-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: var(--black);
+  color: var(--cream);
+  border: var(--border-w) solid var(--black);
+  padding: 0.5em 1em;
+  font-family: var(--font-mono);
+  font-size: var(--mono-size);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.brutal-bar {
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.5em 0.75em;
+  font-family: var(--font-display);
+  display: inline-block;
+}
+
+/* Slight tilts for selective energy */
+.tilt-l { transform: rotate(-1.8deg); }
+.tilt-r { transform: rotate(1.5deg); }
+.tilt-l2 { transform: rotate(-2.5deg); }
+.tilt-r2 { transform: rotate(2.5deg); }
+
+/* =============================================================
+   ANIMATION — chunky pop-in (matches brutalist personality)
+   ============================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+/* Tilted reveals preserve their rotation */
+.slide.visible .reveal.tilt-l  { transform: translateY(0) rotate(-1.8deg); }
+.slide.visible .reveal.tilt-r  { transform: translateY(0) rotate(1.5deg); }
+.slide.visible .reveal.tilt-l2 { transform: translateY(0) rotate(-2.5deg); }
+.slide.visible .reveal.tilt-r2 { transform: translateY(0) rotate(2.5deg); }
+
+.reveal-pop {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.slide.visible .reveal-pop { opacity: 1; transform: scale(1); }
+
+.slide.visible .reveal:nth-child(1), .slide.visible .reveal-pop:nth-child(1) { transition-delay: 0.05s; }
+.slide.visible .reveal:nth-child(2), .slide.visible .reveal-pop:nth-child(2) { transition-delay: 0.13s; }
+.slide.visible .reveal:nth-child(3), .slide.visible .reveal-pop:nth-child(3) { transition-delay: 0.21s; }
+.slide.visible .reveal:nth-child(4), .slide.visible .reveal-pop:nth-child(4) { transition-delay: 0.29s; }
+.slide.visible .reveal:nth-child(5), .slide.visible .reveal-pop:nth-child(5) { transition-delay: 0.37s; }
+.slide.visible .reveal:nth-child(6), .slide.visible .reveal-pop:nth-child(6) { transition-delay: 0.45s; }
+
+/* =============================================================
+   SLIDE 1 — COVER
+   ============================================================= */
+.cover .slide-content {
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.cover-headline {
+  font-family: var(--font-display);
+  font-size: var(--huge-size);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  text-transform: uppercase;
+}
+.cover-headline .vp-block {
+  display: inline-block;
+  background: var(--yellow);
+  border: var(--border-w-lg) solid var(--black);
+  box-shadow: var(--shadow-lg);
+  padding: 0.05em 0.25em 0 0.25em;
+  margin-top: 0.08em;
+}
+
+.cover-name {
+  display: inline-flex;
+  align-items: center;
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.55em 1em;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.8vw, 2.25rem);
+  letter-spacing: 0;
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+}
+
+/* Decorative circle sticker */
+.cover-sticker {
+  position: absolute;
+  width: clamp(110px, 14vw, 200px);
+  height: clamp(110px, 14vw, 200px);
+  border-radius: 50%;
+  background: var(--pink);
+  border: var(--border-w-lg) solid var(--black);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+  text-align: center;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--black);
+  z-index: 4;
+}
+.cover-sticker.sticker-1 {
+  top: clamp(7rem, 14vh, 11rem);
+  right: clamp(2rem, 6vw, 5rem);
+  transform: rotate(11deg);
+}
+.cover-sticker .arrow {
+  position: absolute;
+  font-size: 1.6em;
+  bottom: 12%;
+}
+@media (max-width: 800px) {
+  .cover-sticker { display: none; }
+}
+
+/* =============================================================
+   SLIDE 2 — WHY THIS ROLE
+   ============================================================= */
+.why-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.4vw, 2rem);
+  width: 100%;
+  max-width: 1200px;
+}
+
+.why-title {
+  font-family: var(--font-display);
+  font-size: var(--title-size);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--black);
+  display: inline-block;
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.18em 0.4em;
+  align-self: flex-start;
+  box-shadow: var(--shadow-md);
+}
+
+.why-statement {
+  background: var(--yellow);
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1rem, 2vw, 1.6rem) clamp(1.25rem, 2.5vw, 2rem);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  max-width: 1100px;
+}
+
+.why-sub {
+  font-family: var(--font-display);
+  font-size: var(--h3-size);
+  line-height: 1.2;
+  color: var(--black);
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.6rem, 1.5vw, 1.25rem);
+}
+@media (max-width: 800px) {
+  .track-row { grid-template-columns: repeat(2, 1fr); }
+}
+.track-card {
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(0.85rem, 1.6vw, 1.4rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.track-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-lg);
+}
+.track-card.bg-y { background: var(--yellow); }
+.track-card.bg-p { background: var(--pink); }
+.track-card.bg-b { background: var(--blue); color: var(--cream); }
+.track-card.bg-w { background: var(--cream); }
+
+/* =============================================================
+   SLIDE 3 — LAST SEMESTER
+   ============================================================= */
+.last-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  width: 100%;
+  max-width: 1200px;
+}
+
+.last-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.85rem, 1.6vw, 1.4rem);
+  max-width: 850px;
+}
+.last-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 1.8vw, 1.5rem);
+  background: var(--cream);
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(0.9rem, 1.6vw, 1.4rem) clamp(1rem, 2vw, 1.6rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.2vw, 1.85rem);
+  letter-spacing: -0.015em;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.last-item:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-lg);
+}
+.last-item .marker {
+  flex-shrink: 0;
+  width: clamp(40px, 5vw, 60px);
+  height: clamp(40px, 5vw, 60px);
+  background: var(--black);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+}
+.last-item.accent-y { background: var(--yellow); }
+.last-item.accent-p { background: var(--pink); }
+.last-item.accent-b { background: var(--blue); color: var(--cream); }
+.last-item.accent-b .marker { background: var(--cream); color: var(--black); }
+
+/* =============================================================
+   SLIDE 4 — IMPORTANCE OF PROFESSIONAL
+   ============================================================= */
+.imp-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  width: 100%;
+  max-width: 1300px;
+}
+
+.formula-row {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.5rem, 1.2vw, 1rem);
+  flex-wrap: wrap;
+}
+.formula-block {
+  border: var(--border-w-lg) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(0.8rem, 1.8vw, 1.5rem) clamp(1rem, 2.2vw, 2rem);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.formula-block .label {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 0.3em;
+  line-height: 1.2;
+}
+.formula-block.b-y { background: var(--yellow); }
+.formula-block.b-p { background: var(--pink); }
+.formula-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  padding: 0 clamp(0.5rem, 1vw, 1rem);
+}
+
+.imp-supporting {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.85rem, 1.8vw, 1.5rem);
+  max-width: 1100px;
+}
+@media (max-width: 800px) {
+  .imp-supporting { grid-template-columns: 1fr; }
+}
+.imp-card {
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1rem, 2vw, 1.6rem);
+  background: var(--cream);
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.8vw, 1.45rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.imp-card:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-lg); }
+.imp-card .num {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  font-weight: 700;
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.3em 0.6em;
+  letter-spacing: 0.1em;
+}
+
+/* =============================================================
+   SLIDE 5 — OVERVIEW (我想做什么)
+   ============================================================= */
+.overview-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  width: 100%;
+  max-width: 1300px;
+  align-items: stretch;
+}
+.overview-blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 2.2vw, 2rem);
+  width: 100%;
+}
+@media (max-width: 800px) {
+  .overview-blocks { grid-template-columns: 1fr; }
+}
+.overview-block {
+  border: var(--border-w-lg) solid var(--black);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(180px, 30vh, 320px);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.overview-block:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 14px 14px 0 var(--black);
+}
+.overview-block.b-y { background: var(--yellow); }
+.overview-block.b-p { background: var(--pink); }
+
+/* =============================================================
+   SLIDE 6 / 7 — DETAIL PAGES
+   ============================================================= */
+.detail-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  width: 100%;
+  max-width: 1200px;
+}
+
+.detail-header {
+  display: inline-flex;
+  align-self: flex-start;
+  background: var(--black);
+  color: var(--cream);
+  padding: 0.3em 0.7em;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 4rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-lg);
+}
+.detail-header.bg-y { background: var(--yellow); color: var(--black); border: var(--border-w-lg) solid var(--black); }
+.detail-header.bg-p { background: var(--pink); color: var(--black); border: var(--border-w-lg) solid var(--black); }
+
+.detail-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.85rem, 1.6vw, 1.35rem);
+  max-width: 1050px;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: clamp(50px, 6vw, 80px) 1fr;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  background: var(--cream);
+  border: var(--border-w) solid var(--black);
+  box-shadow: var(--shadow-md);
+  padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1rem, 2vw, 1.75rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.detail-item:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-lg); }
+.detail-item .num-box {
+  width: 100%;
+  height: clamp(50px, 6vw, 80px);
+  background: var(--black);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  font-weight: 700;
+}
+
+/* =============================================================
+   SLIDE 8 — THANK YOU
+   ============================================================= */
+.thanks .slide-content {
+  align-items: center;
+  justify-content: center;
+}
+.thanks-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+}
+.thanks-headline {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 16vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  background: var(--yellow);
+  border: var(--border-w-lg) solid var(--black);
+  box-shadow: var(--shadow-lg);
+  padding: 0.1em 0.25em 0.05em 0.25em;
+}
+.thanks-decor {
+  position: absolute;
+  border: var(--border-w-lg) solid var(--black);
+  background: var(--pink);
+  box-shadow: var(--shadow-md);
+}
+.thanks-decor.d1 {
+  width: clamp(60px, 8vw, 110px);
+  height: clamp(60px, 8vw, 110px);
+  border-radius: 50%;
+  top: clamp(-3rem, -6vw, -4.5rem);
+  left: clamp(-3rem, -8vw, -5rem);
+  transform: rotate(-15deg);
+}
+.thanks-decor.d2 {
+  width: clamp(55px, 7vw, 95px);
+  height: clamp(55px, 7vw, 95px);
+  bottom: clamp(-2rem, -5vw, -3.5rem);
+  right: clamp(-2rem, -7vw, -4.5rem);
+  background: var(--blue);
+  transform: rotate(18deg);
+}
+@media (max-width: 700px) {
+  .thanks-decor { display: none; }
+}
+
+/* =============================================================
+   PROGRESS BAR + NAV DOTS
+   ============================================================= */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 0%;
+  background: var(--yellow);
+  border-bottom: var(--border-w) solid var(--black);
+  z-index: 100;
+  transition: width 0.15s linear;
+}
+
+.nav-dots {
+  position: fixed;
+  right: clamp(1rem, 2vw, 1.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 0.9vw, 0.75rem);
+  z-index: 100;
+}
+.nav-dots button {
+  width: 14px;
+  height: 14px;
+  border: var(--border-w) solid var(--black);
+  background: var(--cream);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s var(--ease);
+}
+.nav-dots button:hover {
+  background: var(--yellow);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--black);
+}
+.nav-dots button.active {
+  background: var(--black);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--pink);
+}
+
+.keyboard-hint {
+  position: fixed;
+  bottom: clamp(0.85rem, 1.8vw, 1.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: var(--small-size);
+  color: var(--black);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 100;
+  pointer-events: none;
+  background: var(--cream);
+  border: 2px solid var(--black);
+  padding: 0.3em 0.7em;
+  font-weight: 700;
+  opacity: 0.7;
+}
+.keyboard-hint kbd {
+  font-family: var(--font-mono);
+  background: var(--yellow);
+  border: 1.5px solid var(--black);
+  padding: 0.05em 0.4em;
+  margin: 0 0.15em;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .nav-dots, .keyboard-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Top progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Right-side nav dots — generated by JS -->
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+
+<!-- Keyboard hint -->
+<div class="keyboard-hint">
+  <kbd>↑</kbd><kbd>↓</kbd> · <kbd>SPACE</kbd>
+</div>
+
+
+<!-- =============================================================
+     SLIDE 1 — COVER
+     content: "Professional VP" + "Weston Guo 郭语石"
+     ============================================================= -->
+<section class="slide cover" data-title="Cover">
+  <div class="page-mark">01 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <!-- Pink circle sticker — pure decoration, no text content -->
+  <div class="cover-sticker sticker-1 reveal-pop" aria-hidden="true">
+    <span style="transform: rotate(-3deg); font-size: 2em; line-height: 1;">★</span>
+  </div>
+
+  <div class="slide-content">
+    <h1 class="cover-headline reveal">
+      PROFESSIONAL<br/>
+      <span class="vp-block">VP</span>
+    </h1>
+    <div class="cover-name reveal">Weston Guo&nbsp;&nbsp;郭语石</div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 2 — WHY THIS ROLE
+     content: section title, statement, "我对于多个Track都有参与", 4 tracks
+     ============================================================= -->
+<section class="slide" data-title="Why">
+  <div class="page-mark">02 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="why-layout">
+
+      <h2 class="why-title reveal">我为什么要选择这个职位</h2>
+
+      <div class="why-statement reveal">
+        我觉得能帮到 HOX 做为一个组织，<br/>
+        也能帮到 Actives + Pledge。
+      </div>
+
+      <h3 class="why-sub reveal">我对于多个 Track 都有参与</h3>
+
+      <div class="track-row">
+        <div class="track-card bg-y reveal-pop">Tech</div>
+        <div class="track-card bg-p reveal-pop">IB</div>
+        <div class="track-card bg-b reveal-pop">Marketing</div>
+        <div class="track-card bg-w reveal-pop">Entrepreneur</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 3 — LAST SEMESTER
+     content: title, IB Track, Tech Track, 上学期HOX Startup Panel
+     ============================================================= -->
+<section class="slide" data-title="Last Semester">
+  <div class="page-mark">03 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="last-layout">
+
+      <h2 class="why-title reveal">上学期做了什么</h2>
+
+      <div class="last-stack">
+        <div class="last-item accent-y reveal">
+          <span class="marker">01</span>
+          <span>IB Track</span>
+        </div>
+        <div class="last-item accent-p reveal">
+          <span class="marker">02</span>
+          <span>Tech Track</span>
+        </div>
+        <div class="last-item accent-b reveal">
+          <span class="marker">03</span>
+          <span>上学期 HOX Startup Panel</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 4 — IMPORTANCE OF PROFESSIONAL
+     content: title, "50% Social + 50% Professional",
+              "HOX Branding的重要部分", "切实帮助到每一个Actives"
+     ============================================================= -->
+<section class="slide" data-title="Importance">
+  <div class="page-mark">04 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="imp-layout">
+
+      <h2 class="why-title reveal">The Importance of Professional</h2>
+
+      <div class="formula-row">
+        <div class="formula-block b-y reveal-pop">
+          50%
+          <span class="label">Social</span>
+        </div>
+        <div class="formula-plus reveal-pop">+</div>
+        <div class="formula-block b-p reveal-pop">
+          50%
+          <span class="label">Professional</span>
+        </div>
+      </div>
+
+      <div class="imp-supporting">
+        <div class="imp-card reveal">
+          <span class="num">01</span>
+          <span>HOX Branding 的重要部分</span>
+        </div>
+        <div class="imp-card reveal">
+          <span class="num">02</span>
+          <span>切实帮助到每一个 Actives</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 5 — OVERVIEW
+     content: "HOX Professional我想做什么", Internal, External
+     ============================================================= -->
+<section class="slide" data-title="What I Want to Do">
+  <div class="page-mark">05 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="overview-layout">
+
+      <h2 class="why-title reveal">HOX Professional 我想做什么</h2>
+
+      <div class="overview-blocks">
+        <div class="overview-block b-y reveal-pop tilt-l">Internal</div>
+        <div class="overview-block b-p reveal-pop tilt-r">External</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 6 — INTERNAL
+     content: Internal label + 3 items (verbatim)
+     ============================================================= -->
+<section class="slide" data-title="Internal">
+  <div class="page-mark">06 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="detail-layout">
+
+      <h2 class="detail-header bg-y reveal">Internal</h2>
+
+      <div class="detail-stack">
+        <div class="detail-item reveal">
+          <div class="num-box">01</div>
+          <span>Pre-Track Meeting</span>
+        </div>
+        <div class="detail-item reveal">
+          <div class="num-box">02</div>
+          <span>增强 Actives Track Meeting 参与度</span>
+        </div>
+        <div class="detail-item reveal">
+          <div class="num-box">03</div>
+          <span>Potential Collab with OSG?</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 7 — EXTERNAL
+     content: External label + 2 items (verbatim)
+     ============================================================= -->
+<section class="slide" data-title="External">
+  <div class="page-mark">07 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="detail-layout">
+
+      <h2 class="detail-header bg-p reveal">External</h2>
+
+      <div class="detail-stack">
+        <div class="detail-item reveal">
+          <div class="num-box">01</div>
+          <span>HOX Hackathon?</span>
+        </div>
+        <div class="detail-item reveal">
+          <div class="num-box">02</div>
+          <span>Potential Collab with CSSA?</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE 8 — THANK YOU
+     content: 谢谢大家
+     ============================================================= -->
+<section class="slide thanks" data-title="Thanks">
+  <div class="page-mark">08 / 08</div>
+  <div class="page-mark-r"><span class="blob"></span>HOX</div>
+
+  <div class="slide-content">
+    <div class="thanks-layout">
+      <div class="thanks-decor d1 reveal-pop" aria-hidden="true"></div>
+      <div class="thanks-decor d2 reveal-pop" aria-hidden="true"></div>
+      <h2 class="thanks-headline reveal-pop">谢谢大家</h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================================
+     SLIDE PRESENTATION CONTROLLER
+     ============================================================= -->
+<script>
+class SlidePresentation {
+  constructor() {
+    this.slides = Array.from(document.querySelectorAll('.slide'));
+    this.currentSlide = 0;
+    this.progressBar = document.getElementById('progressBar');
+    this.navDotsContainer = document.getElementById('navDots');
+
+    this.setupNavDots();
+    this.setupIntersectionObserver();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupProgressBar();
+  }
+
+  // Build nav dots — clear container first to prevent duplicates on re-serve
+  setupNavDots() {
+    this.navDotsContainer.innerHTML = '';
+    this.slides.forEach((slide, i) => {
+      const btn = document.createElement('button');
+      btn.setAttribute('aria-label', `Go to slide ${i + 1}: ${slide.dataset.title || ''}`);
+      btn.addEventListener('click', () => this.goTo(i));
+      this.navDotsContainer.appendChild(btn);
+    });
+    this.dots = Array.from(this.navDotsContainer.children);
+    this.updateActiveDot(0);
+  }
+
+  // Add .visible when slide enters viewport — triggers reveal animations
+  setupIntersectionObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0.5) {
+          entry.target.classList.add('visible');
+          const idx = this.slides.indexOf(entry.target);
+          if (idx >= 0) {
+            this.currentSlide = idx;
+            this.updateActiveDot(idx);
+          }
+        }
+      });
+    }, { threshold: [0.5] });
+    this.slides.forEach(slide => observer.observe(slide));
+  }
+
+  setupKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea') return;
+
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ' || e.key === 'ArrowRight') {
+        e.preventDefault(); this.goTo(this.currentSlide + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') {
+        e.preventDefault(); this.goTo(this.currentSlide - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault(); this.goTo(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); this.goTo(this.slides.length - 1);
+      }
+    });
+  }
+
+  setupTouchNav() {
+    let touchStartY = null;
+    document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', (e) => {
+      if (touchStartY === null) return;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dy) > 60) {
+        if (dy < 0) this.goTo(this.currentSlide + 1);
+        else this.goTo(this.currentSlide - 1);
+      }
+      touchStartY = null;
+    }, { passive: true });
+  }
+
+  setupProgressBar() {
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      this.progressBar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  goTo(idx) {
+    idx = Math.max(0, Math.min(this.slides.length - 1, idx));
+    this.slides[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.currentSlide = idx;
+    this.updateActiveDot(idx);
+  }
+
+  updateActiveDot(idx) {
+    if (!this.dots) return;
+    this.dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+}
+
+new SlidePresentation();
+
+// Make first slide visible on load (already in viewport at boot)
+window.addEventListener('load', () => {
+  document.querySelector('.slide')?.classList.add('visible');
+});
+</script>
+
+</body>
+</html>
